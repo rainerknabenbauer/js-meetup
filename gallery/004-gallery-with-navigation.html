@@ -2,7 +2,7 @@
 <html lang="en-US">
   <head>
     <meta charset="UTF-8" />
-    <title>Document</title>
+    <title>Gallery with navigation</title>
   </head>
   <body>
 
@@ -33,14 +33,9 @@
     <script>
     const numberOfImagesPerPage = 9;
 
-    function hello(index) {
-      console.log("Hello " + index)
-    }
-
     function updateGallery(index) {
       // get a collection of all images on this page - in this case it's an array
       var images = Array.prototype.slice.call(document.getElementsByTagName('img'));
-      console.log(images);
       // we want to update each image, one by one
       images.forEach((image, i) => {
         // calculate image number on page basis
@@ -49,7 +44,6 @@
         var imageNumberToShow = imageNumber.toString().padStart(3, '0')
         // build URL for the next image
         var nextImageUrl = "./img/landscape-" + imageNumberToShow + "-small.jpg";
-        console.log("sd" + nextImageUrl);
         // overwrite the 'src' attribute of the image
         image.src = nextImageUrl;
       });

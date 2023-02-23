@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td><img id="image-001" src="./img/landscape-001-small.jpg"/></td>
+        <td><img id="image-002" src="./img/landscape-002-small.jpg"/></td>
+        <td><img id="image-003" src="./img/landscape-003-small.jpg"/></td>
+      </tr>
+      <tr>
+        <td><img id="image-004" src="./img/landscape-004-small.jpg"/></td>
+        <td><img id="image-005" src="./img/landscape-005-small.jpg"/></td>
+        <td><img id="image-006" src="./img/landscape-006-small.jpg"/></td>
+      </tr>
+      <tr>
+        <td><img id="image-007" src="./img/landscape-007-small.jpg"/></td>
+        <td><img id="image-008" src="./img/landscape-008-small.jpg"/></td>
+        <td><img id="image-009" src="./img/landscape-009-small.jpg"/></td>
+      </tr>
+    </table>
+
+    <script>
+      // Every 2 seconds we automatically load the next image.
+      const intervalInMilliseconds = 2000
+      var counter = 1;
+        // setInterval() repreats whatever you put into here every _ milliseconds
+        setInterval(function() {
+          // grab the middle image, just because I think it's cool
+          var image = document.getElementById("image-005");
+          // format the counter so it's always 3 digits - 001 or 012 or 310
+          var imageNumberToShow = counter.toString().padStart(3, '0')
+          // build URL for the next image
+          var nextImageUrl = "./img/landscape-" + imageNumberToShow + "-small.jpg";
+          // overwrite the 'src' attribute of the image
+          image.src = nextImageUrl;
+          // add 1 to the counter so next time we pick another image
+          counter = counter +1;
+        }, intervalInMilliseconds);
+    </script>
+
+  </body>
+</html>

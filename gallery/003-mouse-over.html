@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td><img id="image-001" onmouseover="updateImage(this)" src="./img/landscape-001-small.jpg"/></td>
+        <td><img id="image-002" onmouseover="updateImage(this)" src="./img/landscape-002-small.jpg"/></td>
+        <td><img id="image-003" onmouseover="updateImage(this)" src="./img/landscape-003-small.jpg"/></td>
+      </tr>
+      <tr>
+        <td><img id="image-004" onmouseover="updateImage(this)" src="./img/landscape-004-small.jpg"/></td>
+        <td><img id="image-005" onmouseover="updateImage(this)" src="./img/landscape-005-small.jpg"/></td>
+        <td><img id="image-006" onmouseover="updateImage(this)" src="./img/landscape-006-small.jpg"/></td>
+      </tr>
+      <tr>
+        <td><img id="image-007" onmouseover="updateImage(this)" src="./img/landscape-007-small.jpg"/></td>
+        <td><img id="image-008" onmouseover="updateImage(this)" src="./img/landscape-008-small.jpg"/></td>
+        <td><img id="image-009" onmouseover="updateImage(this)" src="./img/landscape-009-small.jpg"/></td>
+      </tr>
+    </table>
+
+    <script>
+      var counter = 2;
+      function updateImage(image) {
+        //                   ^ wait - what's going on here?
+
+        // format the counter so it's always 3 digits - 001 or 012 or 310
+        var imageNumberToShow = counter.toString().padStart(3, '0')
+        // build URL for the next image
+        var nextImageUrl = "./img/landscape-" + imageNumberToShow + "-small.jpg";
+        // overwrite the 'src' attribute of the image
+        image.src = nextImageUrl;
+        counter = counter + 1;
+      }
+    </script>
+
+  </body>
+</html>
