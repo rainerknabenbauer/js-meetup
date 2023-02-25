@@ -36,7 +36,7 @@ body, html {height: 100%}
     <img id="logo" src="./img/no-logo.png" width="65px" height="65px"/>
   </div>
   <div class="w3-display-middle">
-    <h1 id="personName" class="w3-jumbo w3-animate-top">Update Username</h1>
+    <h1 id="personName" class="w3-jumbo w3-animate-top">Placeholder: <br/>Person name</h1>
     <hr class="w3-border-grey" style="margin:auto;width:40%">
     <p class="w3-large w3-center">
         <img id="dogImage" src="./img/not-a-dog.jpg" style="border-radius: 8px;height:350px;width:auto;"/>
@@ -86,13 +86,12 @@ function setLogo() {
 async function setDogImage() {
     // API: get a random dog image from  https://dog.ceo/api/breeds/image/random
     const dogApi = "https://dog.ceo/api/breeds/image/random"
+    const elementId = "dogImage"
+
     var responseJson = await fetchFromApi(dogApi)
 
-    console.log("setDogImage() waits for the request to complete. In the end we get the content:")
-    console.log(responseJson)
-
-    var image = document.getElementById("dogImage");
-    // The developers of the API decided to put the URL in 'message'
+    var image = document.getElementById(elementId);
+    // The developers of the API decided to put the URL in 'message' - don't ask why.
     image.src = responseJson.message;
 }
 
@@ -100,12 +99,11 @@ async function setDogImage() {
 async function setIpAddress() {
     // API: get your own IP address at   https://api.ipify.org?format=json
     const ipApi = " https://api.bigdatacloud.net/data/client-ip"
+    const elementId = "ipAddress"
+
     var responseJson = await fetchFromApi(ipApi)
 
-    console.log("setIpAddress() waits for the request to complete. In the end we get the content:")
-    console.log(responseJson)
-
-    var div = document.getElementById("ipAddress");
+    var div = document.getElementById(elementId);
     // The developers of the API decided to put the URL in 'ip'
     div.textContent = "Your IP is " + responseJson.ipString;
 }
@@ -114,15 +112,15 @@ async function setIpAddress() {
 async function setPersonName() {
     // API: Get a complex USER JSON from  https://randomuser.me/api/ and extract first and last name
     const personApi = "https://randomuser.me/api/"
+    const elementId = "personName"
+
     var responseJson = await fetchFromApi(personApi)
 
-    console.log("setIpAddress() waits for the request to complete. In the end we get the content:")
-    console.log(responseJson)
-
-    var div = document.getElementById("personName");
+    var div = document.getElementById(elementId);
     // This response has quite a lot of data. The data itself is categorized.
+    // The response can contain many people, so API returns an array - we want only the first one:
     var firstPerson = responseJson.results[0];
-    console.log(firstPerson)
+    // For this person, we access object 'name' and select attribute 'first'
     div.textContent = "Meet my dog, " + firstPerson.name.first;
 }
 
@@ -135,7 +133,7 @@ async function fetchFromApi(link) {
     })
 }
 
-run()  // this is the entrypoint. from here the magic starts
+run()  // this is the entrypoint. once the page loads, this top level function gets executed
 </script>
 
 </body>
