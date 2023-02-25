@@ -1,11 +1,142 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Lesson 2: API</title>
+<title>JS02: APIs</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+  background: rgba(0, 0, 0, .65) url('/w3images/forestbridge.jpg');
+  background-blend-mode: darken;
+}
+</style>
 </head>
 <body>
 
-<!-- PUT YOUR CODE HERE -->
+
+<!--
+        FOCUS ON THE JAVASCRIPT BELOW
+
+        HTML is just a copy of this template:
+        https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_templates_coming_soon&stacked=h
+
+        I only added some IDs so you can access the elements easily, like 'logo' or 'dogImage'
+-->
+
+
+<div class="bgimg w3-display-container w3-text-white">
+  <div class="w3-display-topleft w3-padding-large w3-xlarge">
+    <img id="logo" src="./img/no-logo.png" width="65px" height="65px"/>
+  </div>
+  <div class="w3-display-middle">
+    <h1 id="personName" class="w3-jumbo w3-animate-top">Update Username</h1>
+    <hr class="w3-border-grey" style="margin:auto;width:40%">
+    <p class="w3-large w3-center">
+        <img id="dogImage" src="./img/not-a-dog.jpg" style="border-radius: 8px;height:350px;width:auto;"/>
+    </p>
+  </div>
+  <div id="ipAddress" class="w3-display-bottomleft w3-padding-large">
+    Put your IP here!
+  </div>
+</div>
+
+<script>
+
+function run() {
+    loadRandomBackground()
+    setLogo()
+    setDogImage()
+    setIpAddress()
+    setPersonName()
+}
+
+function loadRandomBackground() {
+    // Create an array with all image names
+    var images = ["landscape-001.jpg", "landscape-002.jpg", "landscape-003.jpg", "landscape-004.jpg", "landscape-005.jpg"]
+    // Get a random number defined by the number of images
+    var randomNumber = Math.floor(Math.random() * images.length);
+    // Set random background image on page load
+    document.body.style.background = 'url(./img/' + images[randomNumber] + ') no-repeat center center'
+}
+
+
+// WHAT DOES ASYNC MEAN? LET'S INTRODUCE A DELAY IN ONE OF THE FUNCTIONS AND SEE WHAT HAPPENS
+// use reponse = fetch(..) to query APIs
+// ASYNC + AWAIT , what why
+// console.log(response) >> looks prett weird right? what's all that stuff and how do I get my JSON??
+// response contains the full status, headers, all of it. Plus data.
+// use JSON.parse(json) to turn the response into an easy to work with object
+
+// ID of the field is 'logo'
+function setLogo() {
+    // Repeat from last lesson: Get element by ID 'logo' and
+    // replace local image with URL: "https://ucarecdn.com/8c798d25-f03a-43d2-9a92-13f9e9b08fad/Layer2.svg&w=96&q=75"
+    var logo = document.getElementById("logo");
+    logo.src = "https://ucarecdn.com/8c798d25-f03a-43d2-9a92-13f9e9b08fad/Layer2.svg&w=96&q=75";
+}
+
+// ID of the field is 'dogImage'
+async function setDogImage() {
+    // API: get a random dog image from  https://dog.ceo/api/breeds/image/random
+    const dogApi = "https://dog.ceo/api/breeds/image/random"
+    var responseJson = await fetchFromApi(dogApi)
+
+    console.log("setDogImage() waits for the request to complete. In the end we get the content:")
+    console.log(responseJson)
+
+    var image = document.getElementById("dogImage");
+    // The developers of the API decided to put the URL in 'message'
+    image.src = responseJson.message;
+}
+
+// ID of the field is 'ipAddress'
+async function setIpAddress() {
+    // API: get your own IP address at   https://api.ipify.org?format=json
+    const ipApi = " https://api.bigdatacloud.net/data/client-ip"
+    var responseJson = await fetchFromApi(ipApi)
+
+    console.log("setIpAddress() waits for the request to complete. In the end we get the content:")
+    console.log(responseJson)
+
+    var div = document.getElementById("ipAddress");
+    // The developers of the API decided to put the URL in 'ip'
+    div.textContent = "Your IP is " + responseJson.ipString;
+}
+
+// ID of the field is 'personName'
+async function setPersonName() {
+    // API: Get a complex USER JSON from  https://randomuser.me/api/ and extract first and last name
+    const personApi = "https://randomuser.me/api/"
+    var responseJson = await fetchFromApi(personApi)
+
+    console.log("setIpAddress() waits for the request to complete. In the end we get the content:")
+    console.log(responseJson)
+
+    var div = document.getElementById("personName");
+    // This response has quite a lot of data. The data itself is categorized.
+    var firstPerson = responseJson.results[0];
+    console.log(firstPerson)
+    div.textContent = "Meet my dog, " + firstPerson.name.first;
+}
+
+async function fetchFromApi(link) {
+    return await fetch(link).then((response) => {
+        // 'response' contains additional information, HTTP headers, all sorts of stuff - we just want the JSON!
+        console.log("This is the full API response:")
+        console.log(response)
+        return response.json()
+    })
+}
+
+run()  // this is the entrypoint. from here the magic starts
+</script>
 
 </body>
 </html>
