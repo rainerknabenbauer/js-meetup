@@ -71,34 +71,62 @@ function loadRandomBackground() {
 function setLogo() {
     // Repeat from last lesson: Get element by ID 'logo' and
     // replace local image with URL: "https://ucarecdn.com/8c798d25-f03a-43d2-9a92-13f9e9b08fad/Layer2.svg&w=96&q=75"
-    var logoUrl = "https://ucarecdn.com/8c798d25-f03a-43d2-9a92-13f9e9b08fad/Layer2.svg&w=96&q=75";
+    var logo = document.getElementById("logo");
+    logo.src = "https://ucarecdn.com/8c798d25-f03a-43d2-9a92-13f9e9b08fad/Layer2.svg&w=96&q=75";
 }
 
 // ID of the field is 'dogImage'
 async function setDogImage() {
     // API: get a random dog image from  https://dog.ceo/api/breeds/image/random
     const dogApi = "https://dog.ceo/api/breeds/image/random"
+    const elementId = "dogImage"
+
+    var responseJson = await fetchFromApi(dogApi)
+
+    var image = document.getElementById(elementId);
+    // The developers of the API decided to put the URL in 'message' - don't ask why.
+    image.src = responseJson.message;
 }
 
 // ID of the field is 'ipAddress'
 async function setIpAddress() {
     // API: get your own IP address at   https://api.ipify.org?format=json
     const ipApi = " https://api.bigdatacloud.net/data/client-ip"
+    const elementId = "ipAddress"
+
+    var responseJson = await fetchFromApi(ipApi)
+
+    var div = document.getElementById(elementId);
+    // The developers of the API decided to put the URL in 'ip'
+    div.textContent = "Your IP is " + responseJson.ipString;
 }
 
 // ID of the field is 'personName'
 async function setPersonName() {
     // API: Get a complex USER JSON from  https://randomuser.me/api/ and extract first and last name
     const personApi = "https://randomuser.me/api/"
+    const elementId = "personName"
+
+    var responseJson = await fetchFromApi(personApi)
+
+    var div = document.getElementById(elementId);
+    // This response has quite a lot of data. The data itself is categorized.
+    // The response can contain many people, so API returns an array - we want only the first one:
+    var firstPerson = responseJson.results[0];
+    // For this person, we access object 'name' and select attribute 'first'
+    div.textContent = "Meet my dog, " + firstPerson.name.first;
 }
 
 async function fetchFromApi(link) {
-    // use fetch() and chain .then()
-    // ! this part is tricky, consider copy-pasting it and let's talk about it !
+    return await fetch(link).then((response) => {
+        // 'response' contains additional information, HTTP headers, all sorts of stuff - we just want the JSON!
+        console.log("This is the full API response:")
+        console.log(response)
+        return response.json()
+    })
 }
 
-// this is the entrypoint. once the page loads, this top level function gets executed
-run()
+run()  // this is the entrypoint. once the page loads, this top level function gets executed
 </script>
 
 </body>
