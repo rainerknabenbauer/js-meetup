@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  background-color: DodgerBlue;
+}
+
+.flex-container > div {
+  background-color: #f1f1f1;
+  width: 100px;
+  margin: 10px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+}
+</style>
+</head>
+<body>
+
+<div class="flex-container">
+  <!-- empty -->
+</div>
+
+<script>
+
+let timestamp = Date.now()
+
+function run() {
+  add("Son, I'm going shopping. Clean your room!", 0)
+  add("Son hears he has to clean up his room.", 0.1)
+  add("Mom grabs her car keys.", 2)
+  add("Son thinks he can do it later.", 1)
+  add("Mom walks out of the door, minding her own business.", 3)
+  add("Son is badly organized and starts multiple tasks at once.", 4)
+  add("Son finished cleaning the dishes.", 9)
+  add("Son brings out the trash.", 15)
+  add("Son finished brushing his teeth.", 5)
+  add("Washing maschine finished the laundry.", 11)
+  add("Mom returns to home.", 14)
+}
+
+async function add(text, waitInSeconds) {
+  await fetchApi(waitInSeconds)
+  var div = document.createElement("div");
+  div.innerHTML = text;
+  document.body.appendChild(div);
+}
+
+function fetchApi(ms) {
+  // this just pretends to wait for a web service
+  return new Promise(resolve => setTimeout(resolve, ms * 1000));
+}
+
+run()
+</script>
+
+</body>
+</html>
