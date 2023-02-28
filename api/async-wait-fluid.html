@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  background-color: DodgerBlue;
+}
+
+.flex-container > div {
+  background-color: #f1f1f1;
+  width: 100px;
+  margin: 10px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+}
+</style>
+</head>
+<body>
+
+<img src="./img/animated-image.gif" width="150" height="150"/>
+<br/>^ this is just an image so you know when the screen freezes
+<br/><br/>
+
+<div class="flex-container">
+  <!-- empty -->
+</div>
+
+<script>
+
+let timestamp = Date.now()
+
+function run() {
+  runQuickTask()
+  runBlockingTask()
+}
+
+function add(text) {
+  var div = document.createElement("div");
+  div.innerHTML = text;
+  document.body.appendChild(div);
+}
+
+async function runQuickTask() {
+  add("waiting for nothing")
+}
+
+async function runBlockingTask() {
+  let i = 0
+  while (i < 10) {
+    add("waiting for " + i)
+    await delay()
+    i = i + 1
+  }
+}
+
+async function delay() {
+  // this just pretends to wait for a web service
+  return new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * 1000)));
+}
+
+run()
+</script>
+
+</body>
+</html>

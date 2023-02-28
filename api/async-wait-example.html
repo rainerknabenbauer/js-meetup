@@ -20,6 +20,10 @@
 </head>
 <body>
 
+<img src="./img/animated-image.gif" width="150" height="150"/>
+<br/>^ this is just an image so you know when the screen freezes
+<br/><br/>
+
 <div class="flex-container">
   <!-- empty -->
 </div>
@@ -29,29 +33,33 @@
 let timestamp = Date.now()
 
 function run() {
-  add("Son, I'm going shopping. Clean your room!", 0)
-  add("Son hears he has to clean up his room.", 0.1)
-  add("Mom grabs her car keys.", 2)
-  add("Son thinks he can do it later.", 1)
-  add("Mom walks out of the door, minding her own business.", 3)
-  add("Son is badly organized and starts multiple tasks at once.", 4)
-  add("Son finished cleaning the dishes.", 9)
-  add("Son brings out the trash.", 15)
-  add("Son finished brushing his teeth.", 5)
-  add("Washing maschine finished the laundry.", 11)
-  add("Mom returns to home.", 14)
+  add("Boss gives each employee a different job. Each jobs takes a different amount of time to complete.")
+  add("Employee 1 you make some coffee.")
+  add("Employee 2 you take care of watering all the plants.")
+  add("Employee 3 you need to create the invoice for customer X.")
+  add("Employee 4 you - I didn't know you were still working for us. You're fired.")
+  add("Employee 5 you get the car, lets go.")
+  addWithDelay("Employee 1 finished his job.")
+  addWithDelay("Employee 2 finished his job.")
+  addWithDelay("Employee 3 finished his job.")
+  addWithDelay("Employee 4 receives his termination.")
+  addWithDelay("Employee 5 finished his job.")
 }
 
-async function add(text, waitInSeconds) {
-  await fetchApi(waitInSeconds)
+async function add(text) {
   var div = document.createElement("div");
   div.innerHTML = text;
   document.body.appendChild(div);
 }
 
-function fetchApi(ms) {
+async function addWithDelay(text) {
+  await delay()
+  add(text)
+}
+
+function delay(ms) {
   // this just pretends to wait for a web service
-  return new Promise(resolve => setTimeout(resolve, ms * 1000));
+  return new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * 10000)));
 }
 
 run()
